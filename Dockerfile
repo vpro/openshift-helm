@@ -2,6 +2,7 @@ FROM ubuntu:16.04
 
 RUN cd /tmp \
   && apt-get update \
+  && apt-get install curl \
   && apt-get install -y wget \
   && wget https://github.com/openshift/origin/releases/download/v1.3.2/openshift-origin-client-tools-v1.3.2-ac1d579-linux-64bit.tar.gz \
   && tar -xvzf openshift-origin-client-tools-v1.3.2-ac1d579-linux-64bit.tar.gz \
