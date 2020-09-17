@@ -1,0 +1,7 @@
+version: '1'
+services:
+  oc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ls
