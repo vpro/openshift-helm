@@ -1,6 +1,10 @@
 version: '1'
 services:
   oc:
+    enviroment:
+      - HELM_VERSION=3
+      - OPENSHIFT_CLIENT_VERSION=v1.3.2
+      - OPENSHIFT_TAG=ac1d579
     build:
       context: .
       dockerfile: Dockerfile
