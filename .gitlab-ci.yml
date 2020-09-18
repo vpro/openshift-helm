@@ -37,7 +37,9 @@ release:
   [[ "$TRACE" ]] && set -x
 
   function setup_kaniko() {
+    echo "mkdir"
     mkdir -p /kaniko/.docker
+    echo "config"
     cp $DOCKER_AUTH_CONFIG /kaniko/.docker/config.json
   }
 
