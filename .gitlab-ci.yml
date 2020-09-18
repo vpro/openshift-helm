@@ -19,8 +19,8 @@ stages:
 develop:
   <<: *build
   stage: develop
-  before_script:
-    - export IMAGE_TAG=$REGISTRY/openshift-helm:dev
+#  before_script:
+#    - export IMAGE_TAG=$REGISTRY/openshift-helm:dev
   only:
     - master
     - /^feature\/.*/
