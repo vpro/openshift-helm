@@ -1,3 +1,7 @@
+image:
+  name: gcr.io/kaniko-project/executor:debug
+  entrypoint: [""]
+
 variables:
   REGISTRY: docker.vpro.nl
   HELM_VERSION: "3.3.1"
@@ -16,7 +20,7 @@ develop:
   <<: *build
   stage: develop
   before_script:
-    - export IMAGE_TAG= $REGISTRY/openshift-helm:dev
+    - export IMAGE_TAG=$REGISTRY/openshift-helm:dev
   only:
     - master
     - /^feature\/.*/
@@ -25,17 +29,12 @@ release:
   <<: *build
   stage: release
   before_script:
-    - export IMAGE_TAG= $REGISTRY/openshift-helm:$CI_COMMIT_TAG
+    - export IMAGE_TAG=$REGISTRY/openshift-helm:$CI_COMMIT_TAG
   only:
     - tags
 
 .build_setup: &build_setup |
   [[ "$TRACE" ]] && set -x
-
-  function build_image() {
-    - echo "Building docker image"
-    - docker build --no-cache --build-arg HELM_VERSION_ARG=$HELM_VERSION --build-arg HELM_CHECKSUM=$HELM_CHECKSUM
-  }
 
   function setup_kaniko() {
     mkdir -p /kaniko/.docker
@@ -44,6 +43,7 @@ release:
 
   function kaniko_execute() {
     echo "Building and pushing image: \"$IMAGE_TAG\""
+
     /kaniko/executor --context $CI_PROJECT_DIR \
       && --dockerfile $CI_PROJECT_DIR/Dockerfile \
       && --build-arg HELM_VERSION_ARG=$HELM_VERSION \
