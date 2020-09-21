@@ -4,8 +4,8 @@ image:
 
 variables:
   REGISTRY: docker.vpro.nl
-  HELM_VERSION: "3.3.1"
-  HELM_CHECKSUM: "87d302b754b6f702f4308c2aff190280ff23cc21c35660ef93d78c39158d796f"
+  HELM_VERSION: "3.3.3"
+  HELM_CHECKSUM: "246d58b6b353e63ae8627415a7340089015e3eb542ff7b5ce124b0b1409369cc"
 
 stages:
   - develop
