@@ -21,17 +21,20 @@ develop:
   stage: develop
   variables:
     IMAGE_VERSION: dev
-  only:
-    - master
-    - /^feature\/.*/
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: on_success
+    - if: '$CI_COMMIT_REF_NAME =~ /^feature\/.*/'
+      when: on_success
 
 release:
   <<: *build
   stage: release
   variables:
-    IMAGE_VERSION: $CI_COMMIT_TAG # TODO Check if this works
-  only:
-    - tags
+    IMAGE_VERSION: $CI_COMMIT_TAG
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^\d{1,3}(?:.\d{1,3}){0,2}$/'
+      when: on_success
 
 # ---------------------------------------------------------------------------
 
