@@ -4,6 +4,6 @@ variables:
   DOCKER_BUILD_ARGS: '--build-arg\ HELM_VERSION_ARG=$HELM_VERSION\ --build-arg\ HELM_CHECKSUM_ARG=$HELM_CHECKSUM'
 
 include:
-  - project: 'npo/gitlab-templates'
+  - project: 'shared/gitlab/gitlab-templates'
     ref: master
     file: 'docker_build.yml'
