@@ -1,11 +1,8 @@
-FROM ubuntu:20.04
-
-
-
+FROM ubuntu:22.04
 
 RUN apt-get update \
-  && apt-get upgrade \
-  && apt-get -y install curl gnupg libxml2-utils
+  && apt-get -y upgrade \
+  && apt-get -y install curl gnupg libxml2-utils make
 
 
 RUN  echo "deb https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list \
