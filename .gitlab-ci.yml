@@ -1,5 +1,6 @@
 variables:
-  
+  IMAGE_NAME: vpro/openshift-helm
+
 include:
   - project: 'shared/gitlab/gitlab-templates'
     ref: 'tags/5.16'
