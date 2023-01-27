@@ -1,4 +1,4 @@
 
 
 docker:
-	docker build -t openshift-helm:dev .
+	docker build -t vpro/openshift-helm:dev .
