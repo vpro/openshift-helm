@@ -1,5 +1,5 @@
 variables:
-  IMAGE_NAME: vpro/openshift-helm
+  IMAGE_NAME: vpro/openshift-helm2
 
 include:
   - project: 'shared/gitlab/gitlab-templates'
