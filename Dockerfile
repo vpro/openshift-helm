@@ -28,4 +28,4 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
 
 
 
-
+SHELL ["/bin/bash", "-c"]
