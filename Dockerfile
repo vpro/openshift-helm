@@ -24,7 +24,7 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
      curl -s  https://baltocdn.com/helm/signing.asc | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=no  apt-key add -  &&\
      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list &&\
      apt-get update &&\
-     apt-get -y install helm=3.11.3-1
+     apt-get -y install helm=3.12.1-1
 
 
 
