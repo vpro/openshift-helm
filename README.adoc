@@ -1,0 +1,2 @@
+= docker image with helm, used in gitlab ci/cd
+
