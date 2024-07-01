@@ -12,7 +12,7 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
     echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check &&\
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-RUN curl -fsSL https://downloads-openshift-console.apps.cluster.chp4.io/$(dpkg --print-architecture)/linux/oc.tar --output oc.tar &&\
+RUN curl -fsSL https://downloads-openshift-console.apps.cluster.chp5-prod.npocloud.nl/$(dpkg --print-architecture)/linux/oc.tar --output oc.tar &&\
   tar xvf oc.tar &&\
   mv oc /usr/local/bin &&\
   chmod +x /usr/local/bin/oc &&\
