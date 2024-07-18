@@ -1,8 +1,8 @@
 variables:
   IMAGE_NAME: openshift-helm
-  NAMESPACE: vpro
+  NAMESPACE: poms
 
 include:
-  - project: 'shared/gitlab/gitlab-templates'
-    ref: 'tags/9.22'
+  - project: 'npo-identity/poms/gitlab-templates'
+    ref: 'chp4'
     file: 'docker_build.yml'
