@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
 
+LABEL org.opencontainers.image.description="ubunty with kubernates, docker, oc, helm, used in ci/cd tasks"
 
 
 RUN apt-get update &&\
