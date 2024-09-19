@@ -1,8 +1,0 @@
-variables:
-  IMAGE_NAME: openshift-helm
-  NAMESPACE: poms
-
-include:
-  - project: 'npo-identity/poms/gitlab-templates'
-    ref: 'chp4'
-    file: 'docker_build.yml'
