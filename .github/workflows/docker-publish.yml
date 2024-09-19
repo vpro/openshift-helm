@@ -13,7 +13,6 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
 
@@ -45,7 +44,6 @@ jobs:
             type=ref,event=tag     
             type=pep440,pattern={{major}},event=tag
             type=pep440,pattern={{major}}.{{minor}},event=tag
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
