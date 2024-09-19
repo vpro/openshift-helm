@@ -7,7 +7,7 @@ RUN apt-get update &&\
   apt-get -y upgrade &&\
   export DEBIAN_FRONTEND=noninteractive &&\
   apt-get -y install curl gnupg libxml2-utils make docker.io ca-certificates sudo && \
-  rm -rf /var/lib/apt/lists/*
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl" && \
     curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl.sha256" &&\
@@ -25,7 +25,7 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list &&\
      apt-get update &&\
      apt-get -y install helm=3.16.1-1 &&\
-     rm -rf /var/lib/apt/lists/*
+     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
 
