@@ -27,6 +27,9 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
      apt-get -y install helm=3.16.1-1 &&\
      apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+COPY --from=ghcr.io/npo-poms/kaniko:main /docker-build-setup.sh /
+
 SHELL ["/bin/bash", "-c"]
 
 RUN date > /DOCKER.BUILD
