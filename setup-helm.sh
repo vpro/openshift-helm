@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "helm build setup"
 source /docker-build-setup.sh
 
