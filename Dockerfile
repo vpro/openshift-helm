@@ -28,11 +28,18 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-COPY --from=ghcr.io/npo-poms/kaniko:1 /docker-build-setup.sh /
-COPY setup-helm.sh /
+COPY --from=ghcr.io/npo-poms/kaniko:3 /docker-build-setup.sh /
+COPY scripts/* /
+
 
 RUN chmod +x /setup-helm.sh && \
-    chmod +x /docker-build-setup.sh
+    chmod +x /docker-build-setup.sh && \
+    chmod +x /script.sh && \
+    mkdir /workspace
+
+WORKDIR /workspace
+
+ENTRYPOINT ["/script.sh" ]
 
 SHELL ["/bin/bash", "-c"]
 
