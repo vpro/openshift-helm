@@ -1,4 +1,17 @@
 #!/bin/bash
+CHART_PROJECT_NAME=${CHART_PROJECT_NAME:-openshift-chart-deployment}
+CHART_VERSION=${CHART_VERSION:-3.2}
+TRACE=${TRACE:-false}
+
+OS_PROJECT=${OS_PROJECT:-poms}
+OS_ENV=${OS_ENV:-test}
+
+HELM_REPO=${HELM_REPO:-oci://registry.npohosting.nl/poms}
+HELM_REGISTRY=${HELM_REGISTRY:-https://registry.npohosting.nl}
+
+OC_CONTEXT_PROD=${OC_CONTEXT_PROD:=pomsp}
+OC_CONTEXT_TEST=${OC_CONTEXT_TEST:=pomst}
+
 echo "helm build setup"
 if ! type os_app_name &> /dev/null ; then
 . "$KANIKO_SCRIPTS"dockerfile-functions.sh
@@ -11,10 +24,10 @@ login_oc() {
   export SERVER
   if [ "$OS_ENV" = "prod" ]; then
      SERVER=$OPENSHIFT_PROD_SERVER
-     CONTEXT=pomsp
+     CONTEXT=$OC_CONTEXT_PROD
   else
      SERVER=$OPENSHIFT_TEST_SERVER
-     CONTEXT=pomst
+     CONTEXT=$OC_CONTEXT_TEST
   fi
 
   if [ "$KUBECONFIG" != "" ]; then
@@ -33,7 +46,7 @@ login_oc() {
   oc projects
 }
 
-echo "${BASH_VERSION} $LINENO Defining setup_oc_helm function"
+echo "Defining setup_oc_helm function"
 
 function setup_oc_helm() {
  DIR=$1
