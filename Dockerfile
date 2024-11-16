@@ -1,7 +1,6 @@
 FROM ubuntu:24.04
 
-LABEL org.opencontainers.image.description="ubuntu with kubernates, docker, oc, helm, used in ci/cd tasks"
-
+LABEL org.opencontainers.image.description="ubuntu with kubernetes, docker, oc, helm, used in ci/cd tasks"
 
 RUN apt-get update &&\
   apt-get -y upgrade &&\
@@ -28,13 +27,14 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-COPY --from=ghcr.io/npo-poms/kaniko:main /docker-build-setup.sh /
-COPY scripts/* /
+ENV KANIKO_SCRIPTS=/
+ENV HELM_SCRIPTS=/
+
+COPY --from=ghcr.io/npo-poms/kaniko:main /dockerfile-functions.sh $KANIKO_SCRIPTS
+COPY scripts/* $HELM_SCRIPTS
 
 
-RUN chmod +x /setup-helm.sh && \
-    chmod +x /docker-build-setup.sh && \
-    chmod +x /script.sh && \
+RUN chmod +x /script.sh && \
     mkdir /workspace
 
 WORKDIR /workspace

@@ -1,32 +1,37 @@
 #!/bin/bash
 echo "helm build setup"
-. /docker-build-setup.sh
+if ! type os_app_name &> /dev/null ; then
+. "$KANIKO_SCRIPTS"dockerfile-functions.sh
+fi
 
 echo "Using shell $SHELL"
-# Switch to the correct Openshift cluster (test/acc or prod)
-export SERVER
-if [ "$OS_ENV" = "prod" ]; then
-   SERVER=$OPENSHIFT_PROD_SERVER
-   CONTEXT=pomsp
-else
-   SERVER=$OPENSHIFT_TEST_SERVER
-   CONTEXT=pomst
-fi
 
-if [ "$KUBECONFIG" != "" ]; then
-   echo "Fixing permissions on $KUBECONFIG"
-   chmod 700 $KUBECONFIG # avoid warning about permissions (https://gitlab.com/gitlab-org/gitlab/-/issues/363057)
-fi
+login_oc() {
+  # Switch to the correct Openshift cluster (test/acc or prod)
+  export SERVER
+  if [ "$OS_ENV" = "prod" ]; then
+     SERVER=$OPENSHIFT_PROD_SERVER
+     CONTEXT=pomsp
+  else
+     SERVER=$OPENSHIFT_TEST_SERVER
+     CONTEXT=pomst
+  fi
 
-# - Make sure we are oc logged in.
-#   using KUBECONFIG and CONTEXT
-# - We selected the desired project $OS_PROJECT-$OS_ENV
-# - The variable VALUES is resolved to a comma separated list of relevant values.yaml files
-#   The first argument can be a sub directory
-echo "Using helm $(helm version)"
-oc config use-context $CONTEXT
-oc project $OS_PROJECT-$OS_ENV
-oc projects
+  if [ "$KUBECONFIG" != "" ]; then
+     echo "Fixing permissions on $KUBECONFIG"
+     chmod 700 $KUBECONFIG # avoid warning about permissions (https://gitlab.com/gitlab-org/gitlab/-/issues/363057)
+  fi
+
+   # - Make sure we are oc logged in.
+  #   using KUBECONFIG and CONTEXT
+  # - We selected the desired project $OS_PROJECT-$OS_ENV
+  # - The variable VALUES is resolved to a comma separated list of relevant values.yaml files
+  #   The first argument can be a sub directory
+  echo "Using helm $(helm version)"
+  oc config use-context $CONTEXT
+  oc project $OS_PROJECT-$OS_ENV
+  oc projects
+}
 
 echo "${BASH_VERSION} $LINENO Defining setup_oc_helm function"
 
@@ -68,8 +73,6 @@ function setup_oc_helm() {
  export VALUES=$(printf '%s\n' "$(IFS=,; printf '%s' "${VALUES[*]}")")
 }
 
- # defining a bash ansi color (yellow) to make some of this stand out better.
-TXT_HI="\e[93m" && TXT_CLEAR="\e[0m"
 # deploys application using helm
 # $1: The first argument is the directory where the docker file is living.
 # The application name will be parsed from ARG NAME

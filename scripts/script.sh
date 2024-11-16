@@ -7,8 +7,6 @@ export OS_PROJECT=poms
 export OS_ENV=test
 export HELM_REPO=oci://registry.npohosting.nl/poms
 export HELM_REGISTRY=https://registry.npohosting.nl
-export DOCKER_AUTH_CONFIG_FILE=$HOME/.docker/config-gitlab.json
-
 
 
 export HARBOR_USER
@@ -17,10 +15,16 @@ export HARBOR_PASSWORD
 
 cd /workspace || exit 1
 
-. /workspace/job.env
+if [ -f job.env ] ; then
+  echo "Found job.env"
+  cat job.env
+  . ./job.env
+else
+  echo "No job.env"
+fi
 
-. /setup-helm.sh
+. "$HELM_SCRIPTS"helm-functions.sh
 
+login_oc
 setup_oc_helm
-
-deploy_application "$(pwd)"
+deploy_applications
