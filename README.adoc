@@ -1,2 +1,79 @@
 = docker image with helm, used in gitlab ci/cd
 
+== Running locally
+
+You'll need:
+
+- HARBOR credentials in `~/conf/harbor.properties` for chart registry
+- A ~/.kube/config with credentials for openshift
+- A ~/ .docker/config.json with credientiasl for docker registery
+
+Then it can be used like so
+[source, bash]
+----
+michiel@mitulo:(test)(main,78)~/npo/media/main$ ~/github/vpro/openshift-helm/helm.sh
+Found job.env
+IMAGE_TAG=dev
+IMAGE=registry.npohosting.nl/poms/media:dev
+IMAGE_NAME=media
+FULL_IMAGE_NAME=poms/media:dev
+PROJECT_VERSION=8.4-SNAPSHOT
+OS_APPLICATIONS=media-rs,media-server
+helm build setup
+docker build setup
+defining os_app_name
+defining get_artifact_versions
+Using shell /bin/bash
+Defining setup_oc_helm function
+Using helm version.BuildInfo{Version:"v3.16.1", GitCommit:"5a5449dc42be07001fd5771d56429132984ab3ab", GitTreeState:"clean", GoVersion:"go1.22.7"}
+Switched to context "pomst".
+Now using project "poms-test" on server "https://api.cluster.chp5-test.npocloud.nl:6443".
+You have access to the following projects and can switch between them with ' project <projectname>':
+
+    poms - POMS base project
+    poms-acc
+  * poms-test
+
+Using project "poms-test" on server "https://api.cluster.chp5-test.npocloud.nl:6443".
+Logging in robot-poms+poms-chp to registry : https://registry.npohosting.nl
+Login Succeeded
+Pulling chart 'oci://registry.npohosting.nl/poms' '' '3.4'
+Pulled: registry.npohosting.nl/poms/openshift-chart:3.4
+Digest: sha256:142c83f86f3f64b664337e07741b292041b93b5cbfd328a13c5fd13c7f57fe52
+No ./values-test.yaml found
+No ./values.yaml found
+deploy application in media-rs
+Using image artifact: "registry.npohosting.nl/poms/media-api-backend:dev" (tag: "dev", full: "poms/media-api-backend:dev")
+Deploying "media-api-backend" v "8.4-SNAPSHOT" to "poms-test"
+value files: ./media-rs/helm/values.yaml,./media-rs/helm/values-test.yaml
+Helm upgrade media-api-backend-test registry.npohosting.nl/poms/media-api-backend:dev
+Release "media-api-backend-test" has been upgraded. Happy Helming!
+NAME: media-api-backend-test
+LAST DEPLOYED: Sat Nov 16 22:26:41 2024
+NAMESPACE: poms-test
+STATUS: deployed
+REVISION: 105
+TEST SUITE: None
+Force restarting for stateful set poms-test:media-api-backend now
+statefulset.apps/media-api-backend restarted
+deploy application in media-server
+Using image artifact: "registry.npohosting.nl/poms/media:dev" (tag: "dev", full: "poms/media:dev")
+Deploying "media" v "8.4-SNAPSHOT" to "poms-test"
+Applying config: "media-server/helm/config"
+'media-server/helm/config' -> 'openshift-chart/config'
+'media-server/helm/config/importer.properties' -> 'openshift-chart/config/importer.properties'
+Applying config: "media-server/helm/config-test/*"
+'media-server/helm/config-test/importer.properties' -> 'openshift-chart/config/importer.properties'
+value files: ./media-server/helm/values.yaml,./media-server/helm/values-test.yaml
+Helm upgrade media-test registry.npohosting.nl/poms/media:dev
+Release "media-test" has been upgraded. Happy Helming!
+NAME: media-test
+LAST DEPLOYED: Sat Nov 16 22:26:43 2024
+NAMESPACE: poms-test
+STATUS: deployed
+REVISION: 108
+TEST SUITE: None
+Force restarting for stateful set poms-test:media now
+statefulset.apps/media restarted
+----
+
