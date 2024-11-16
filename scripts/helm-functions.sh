@@ -1,16 +1,20 @@
 #!/bin/bash
-CHART_PROJECT_NAME=${CHART_PROJECT_NAME:-openshift-chart-deployment}
-CHART_VERSION=${CHART_VERSION:-3.2}
+CHART_PROJECT_NAME=${CHART_PROJECT_NAME:-openshift-chart}
+CHART_VERSION=${CHART_VERSION:-3.4}
 TRACE=${TRACE:-false}
 
 OS_PROJECT=${OS_PROJECT:-poms}
 OS_ENV=${OS_ENV:-test}
+OS_STORAGE_TYPE=${OS_STORAGE_TYPE:-ocs-storagecluster-ceph-rbd}
 
 HELM_REPO=${HELM_REPO:-oci://registry.npohosting.nl/poms}
-HELM_REGISTRY=${HELM_REGISTRY:-https://registry.npohosting.nl}
+REGISTRY=${REGISTRY:-registry.npohosting.nl}
+HELM_REGISTRY=${HELM_REGISTRY:-https://$REGISTRY}
 
 OC_CONTEXT_PROD=${OC_CONTEXT_PROD:=pomsp}
 OC_CONTEXT_TEST=${OC_CONTEXT_TEST:=pomst}
+NAMESPACE=${NAMESPACE:-poms}
+
 
 echo "helm build setup"
 if ! type os_app_name &> /dev/null ; then
@@ -94,7 +98,7 @@ function deploy_application() {
   DIR=$1
 
   OS_APPLICATION=$(os_app_name $DIR)
-  exit_code=$?
+    exit_code=$?
   if [[ $exit_code != '0' ]] ; then
     echo "Error with os_app_name function $exit_code"
     exit $exit_code
@@ -176,7 +180,7 @@ function deploy_application() {
     ./$CHART_PROJECT_NAME --version $CHART_VERSION
   fi
 
-  echo "Helm upgrade $OS_APPLICATION-$OS_ENV"
+  echo "Helm upgrade $OS_APPLICATION-$OS_ENV $IMAGE"
   helm upgrade --install $OS_APPLICATION-$OS_ENV \
     --history-max 3 \
     --values $VALUES \
