@@ -96,9 +96,10 @@ function setup_oc_helm() {
 
 function deploy_application() {
   DIR=$1
-
+  echo "Deploy application in $DIR"
   OS_APPLICATION=$(os_app_name $DIR)
-    exit_code=$?
+  exit_code=$?
+  echo "Deploy application in $DIR -> $OS_APPLICATION}"
   if [[ $exit_code != '0' ]] ; then
     echo "Error with os_app_name function $exit_code"
     exit $exit_code
@@ -213,11 +214,14 @@ function deploy_applications() {
     echo "Deploy the root directory only"
     get_artifact_versions . $PROJECT_VERSION
     deploy_application .
+  else
+    pwd
+    ls
+    for app_dir in $(echo $DEPLOY_APPLICATIONS | sed "s/,/ /g")
+    do
+      echo deploy application in $app_dir
+      get_artifact_versions $app_dir $PROJECT_VERSION
+      deploy_application $app_dir
+    done
   fi
-  for app_dir in $(echo $DEPLOY_APPLICATIONS | sed "s/,/ /g")
-  do
-    echo deploy application in $app_dir
-    get_artifact_versions $app_dir $PROJECT_VERSION
-    deploy_application $app_dir
-  done
 }
