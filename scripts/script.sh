@@ -1,10 +1,6 @@
 #!/bin/bash
 
-
 #. /conf/harbor.properties
-
-cd /workspace || exit 1
-
 if [ -f job.env ] ; then
   echo "Found job.env"
   cat job.env
