@@ -212,7 +212,7 @@ function deploy_applications() {
   fi
   if [ -z "$DEPLOY_APPLICATIONS" ]; then
     echo "Deploy the root directory only"
-    get_artifact_versions . $PROJECT_VERSION
+    get_docker_image_name . $PROJECT_VERSION
     deploy_application .
   else
     pwd
@@ -220,7 +220,7 @@ function deploy_applications() {
     for app_dir in $(echo $DEPLOY_APPLICATIONS | sed "s/,/ /g")
     do
       echo deploy application in $app_dir
-      get_artifact_versions $app_dir $PROJECT_VERSION
+      get_docker_image_name $app_dir $PROJECT_VERSION
       deploy_application $app_dir
     done
   fi
