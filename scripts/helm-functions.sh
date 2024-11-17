@@ -208,6 +208,7 @@ function deploy_applications() {
   fi
 
   if [ -z "$DEPLOY_APPLICATIONS" ]; then
+    echo "No DEPLOY_APPLICATIONS defined. Taking it from OS_APPLICATIONS=${OS_APPLICATIONS}"
      DEPLOY_APPLICATIONS=$OS_APPLICATIONS
   fi
   if [ -z "$DEPLOY_APPLICATIONS" ]; then
@@ -215,10 +216,10 @@ function deploy_applications() {
     get_docker_image_name . $PROJECT_VERSION
     deploy_application .
   else
+    echo -e "Deploying ${TXT_HI}${DEPLOY_APPLICATIONS}${TXT_CLEAR}"
     pwd
     ls
-    for app_dir in $(echo $DEPLOY_APPLICATIONS | sed "s/,/ /g")
-    do
+    for app_dir in ${DEPLOY_APPLICATIONS//,/ } ; do
       echo deploy application in $app_dir
       get_docker_image_name $app_dir $PROJECT_VERSION
       deploy_application $app_dir
