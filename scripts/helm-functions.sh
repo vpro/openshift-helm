@@ -63,31 +63,32 @@ function setup_oc_helm() {
    --version $CHART_VERSION \
    --untar
 
- VALUES=()
+ VALUESA=()
  if [ "$DIR" != "" ] ; then
    if [ -e ./$DIR/helm/values-$OS_ENV.yaml ]; then
-      VALUES+=(./$DIR/helm/values-$OS_ENV.yaml)
+      VALUESA+=("./$DIR/helm/values-$OS_ENV.yaml")
    else
       echo "No ./$DIR/helm/values-$OS_ENV.yaml found"
    fi
    if [ -e ./$DIR/helm/values.yaml ]; then
-      VALUES+=(./$DIR/helm/values.yaml)
+      VALUESA+=("./$DIR/helm/values.yaml")
    else
        echo "No ./$DIR/helm/values.yaml found"
    fi
  fi
  if [ -e ./values-$OS_ENV.yaml ]; then
-    VALUES+=(./values-$OS_ENV.yaml)
+    VALUESA+=("./values-$OS_ENV.yaml")
  else
     echo "No ./values-$OS_ENV.yaml found"
  fi
 
  if [ -e ./values.yaml ]; then
-    VALUES+=(./values.yaml)
+    VALUESA+=(./values.yaml)
  else
     echo "No ./values.yaml found"
  fi
- export VALUES=$(printf '%s\n' "$(IFS=,; printf '%s' "${VALUES[*]}")")
+ export VALUES
+ VALUES=$(printf '%s\n' "$(IFS=,; printf '%s' "${VALUESA[*]}")")
 }
 
 # deploys application using helm
@@ -150,9 +151,9 @@ function deploy_application() {
     cp -Rv $DIR/helm/configMaps-$OS_ENV/* $CHART_PROJECT_NAME/configMaps
   fi
 
-  export VALUES=""
+  export VALUES=()
   if [ -e ./$DIR/helm/values-$OS_ENV.yaml ]; then
-    export VALUES=./$DIR/helm/values-$OS_ENV.yaml
+    export VALUES=("./$DIR/helm/values-$OS_ENV.yaml")
   else
     echo "No ./$DIR/helm/values-$OS_ENV.yaml found"
   fi
