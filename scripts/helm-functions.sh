@@ -99,7 +99,7 @@ function deploy_application() {
   echo "Deploy application in $DIR"
   OS_APPLICATION=$(os_app_name $DIR)
   exit_code=$?
-  echo "Deploy application in $DIR -> $OS_APPLICATION}"
+  echo "Deploy application in $DIR -> $OS_APPLICATION"
   if [[ $exit_code != '0' ]] ; then
     echo "Error with os_app_name function $exit_code"
     exit $exit_code

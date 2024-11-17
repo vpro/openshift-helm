@@ -1,6 +1,6 @@
 #!/bin/bash
-#HELM_IMAGE=ghcr.io/vpro/openshift-helm:3.0
-HELM_IMAGE=vpro/openshift-helm:main
+HELM_IMAGE=ghcr.io/vpro/openshift-helm:main
+#HELM_IMAGE=vpro/openshift-helm:main
 
 
 if [ -f ~/conf/harbor.properties ] ; then
