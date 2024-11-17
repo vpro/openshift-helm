@@ -218,7 +218,7 @@ function deploy_applications() {
   else
     echo -e "Deploying ${TXT_HI}${DEPLOY_APPLICATIONS}${TXT_CLEAR}"
     pwd
-    ls
+    #ls
     for app_dir in ${DEPLOY_APPLICATIONS//,/ } ; do
       echo deploy application in $app_dir
       get_docker_image_name $app_dir $PROJECT_VERSION
