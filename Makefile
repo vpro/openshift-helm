@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := docker
-IMAGE := vpro/openshift-helm:main
+TAG := $(shell git symbolic-ref -q --short HEAD || git describe --tags --exact-match)
+IMAGE := vpro/openshift-helm:$(TAG)
+MMIMAGE:=mmbase/openshift-helm:$(TAG)
 
 help:     ## Show this help.
 	@sed -n 's/^##//p' $(MAKEFILE_LIST)
@@ -10,3 +12,14 @@ docker: ## build image locally
 
 explore:  ## look around
 	docker run -it  $(IMAGE)
+
+
+
+# lets try to push a verison in docker.io, just to try out whether we then can  in gitlab'
+# 'Enable the Dependency Proxy to cache container images from Docker Hub and automatically clear the cache.'
+mmdocker: ## build image locally for upload in docker.io/mmbase
+	docker buildx  build --platform linux/amd64  -t $(MMIMAGE) .
+
+
+mmpush:
+	docker image push $(MMIMAGE)
