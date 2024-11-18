@@ -9,4 +9,4 @@ docker: ## build image locally
 	docker build --no-cache -t $(IMAGE) .
 
 explore:  ## look around
-	docker run -it --entrypoint /bin/bash $(IMAGE)
+	docker run -it  $(IMAGE)

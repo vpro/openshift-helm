@@ -40,8 +40,6 @@ RUN chmod +x /script.sh && \
 WORKDIR /workspace
 
 ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["sh"]
-
-SHELL ["/bin/bash", "-c"]
+CMD ["bash"]
 
 RUN date > /DOCKER.BUILD
