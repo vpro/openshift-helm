@@ -52,7 +52,7 @@ login_oc() {
 
 echo "Defining setup_oc_helm function"
 
-function setup_oc_helm() {
+setup_oc_helm() {
  DIR=$1
 
  echo "Logging in $HARBOR_USER to registry : $HELM_REGISTRY"
@@ -95,7 +95,7 @@ function setup_oc_helm() {
 # $1: The first argument is the directory where the docker file is living.
 # The application name will be parsed from ARG NAME
 
-function deploy_application() {
+deploy_application() {
   DIR=$1
   echo "Deploy application in $DIR"
   OS_APPLICATION=$(os_app_name $DIR)
@@ -203,7 +203,7 @@ function deploy_application() {
   fi
 }
 
-function deploy_applications() {
+deploy_applications() {
   if [ $TRACE = 'true' ] ; then
       helm version
   fi
