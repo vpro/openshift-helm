@@ -30,7 +30,7 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
 ENV KANIKO_SCRIPTS=/
 ENV HELM_SCRIPTS=/
 
-COPY --from=ghcr.io/npo-poms/kaniko:6 /dockerfile-functions.sh $KANIKO_SCRIPTS
+COPY --from=ghcr.io/npo-poms/kaniko:7 /dockerfile-functions.sh $KANIKO_SCRIPTS
 COPY scripts/* $HELM_SCRIPTS
 
 
@@ -39,7 +39,9 @@ RUN chmod +x /script.sh && \
 
 WORKDIR /workspace
 
+# This is default for docker, handy in gitlab when it is like that, so you don't need to specifiy it everytime
 ENTRYPOINT ["/bin/sh", "-c"]
-#CMD ["bash"]
+CMD ["sh"]
+
 
 RUN date > /DOCKER.BUILD
