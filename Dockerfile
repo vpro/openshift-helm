@@ -40,8 +40,7 @@ RUN chmod +x /script.sh && \
 WORKDIR /workspace
 
 # This is default for docker, handy in gitlab when it is like that, so you don't need to specifiy it everytime
-ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["sh"]
+SHELL ["/bin/bash", "-c"]
 
 
 RUN date > /DOCKER.BUILD
