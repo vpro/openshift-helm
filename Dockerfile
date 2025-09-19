@@ -30,7 +30,7 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/s
 ENV KANIKO_SCRIPTS=/
 ENV HELM_SCRIPTS=/
 
-COPY --from=ghcr.io/npo-poms/kaniko:7 /dockerfile-functions.sh $KANIKO_SCRIPTS
+COPY --from=ghcr.io/npo-poms/kaniko:10 /dockerfile-functions.sh $KANIKO_SCRIPTS
 COPY scripts/* $HELM_SCRIPTS
 
 
