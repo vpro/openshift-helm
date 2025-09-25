@@ -1,6 +1,8 @@
 FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.description="ubuntu with kubernetes, docker, oc, helm, used in ci/cd tasks"
+LABEL maintainer="digitaal-techniek@vpro.nl,michiel@mmprogrami.nl"
+
 
 RUN apt-get update &&\
   apt-get -y upgrade &&\
