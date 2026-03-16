@@ -31,7 +31,7 @@ RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gp
 ENV KANIKO_SCRIPTS=/
 ENV HELM_SCRIPTS=/
 
-COPY --from=ghcr.io/npo-poms/kaniko:10 /dockerfile-functions.sh $KANIKO_SCRIPTS
+COPY --from=ghcr.io/npo-poms/kaniko:11 /dockerfile-functions.sh $KANIKO_SCRIPTS
 COPY scripts/* $HELM_SCRIPTS
 
 
