@@ -12,8 +12,13 @@ RUN apt-get update &&\
 
 
 RUN cd /tmp && \
-    curl -LO https://mirror.openshift.com/pub/openshift-v5/clients/ocp/stable/openshift-client-linux-$(dpkg --print-architecture).tar.gz && \
-    tar -xvf openshift-client-linux-$(dpkg --print-architecture).tar.gz &&  \
+    ARCH=$(dpkg --print-architecture) && \
+    case "$ARCH" in \
+      amd64) OC_SUFFIX="" ;; \
+      *)     OC_SUFFIX="-${ARCH}" ;; \
+    esac && \
+    curl -LO https://mirror.openshift.com/pub/openshift-v5/clients/ocp/stable/openshift-client-linux${OC_SUFFIX}.tar.gz && \
+    tar -xvf openshift-client-linux${OC_SUFFIX}.tar.gz &&  \
     mv oc /usr/local/bin &&\
     chmod +x /usr/local/bin/oc &&\
     mv kubectl /usr/local/bin &&\
