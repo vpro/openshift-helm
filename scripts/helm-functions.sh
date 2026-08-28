@@ -9,7 +9,7 @@ OS_STORAGE_TYPE=${OS_STORAGE_TYPE:-ocs-storagecluster-ceph-rbd}
 
 HELM_REPO=${HELM_REPO:-oci://registry.npohosting.nl/poms}
 REGISTRY=${REGISTRY:-registry.npohosting.nl}
-HELM_REGISTRY=${HELM_REGISTRY:-https://$REGISTRY}
+HELM_REGISTRY=${HELM_REGISTRY:-$REGISTRY}
 
 OC_CONTEXT_PROD=${OC_CONTEXT_PROD:=pomsp}
 OC_CONTEXT_TEST=${OC_CONTEXT_TEST:=pomst}
@@ -58,7 +58,7 @@ setup_oc_helm() {
  echo "Logging in $HARBOR_USER to registry : $HELM_REGISTRY"
  echo  $HARBOR_PASSWORD | helm registry login $HELM_REGISTRY --username $HARBOR_USER --password-stdin
 
- echo "Pulling chart '$HELM_REPO' '$CHART_PROJECTNAME' '$CHART_VERSION'"
+ echo "Pulling chart '$HELM_REPO' '$CHART_PROJECT_NAME' '$CHART_VERSION'"
  helm pull $HELM_REPO/$CHART_PROJECT_NAME \
    --version $CHART_VERSION \
    --untar
