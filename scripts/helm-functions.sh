@@ -7,9 +7,8 @@ OS_PROJECT=${OS_PROJECT:-poms}
 OS_ENV=${OS_ENV:-test}
 OS_STORAGE_TYPE=${OS_STORAGE_TYPE:-ocs-storagecluster-ceph-rbd}
 
-HELM_REPO=${HELM_REPO:-oci://registry.npohosting.nl/poms}
 REGISTRY=${REGISTRY:-registry.npohosting.nl}
-HELM_REGISTRY=${HELM_REGISTRY:-$REGISTRY}
+HELM_REPO=${HELM_REPO:-oci://$REGISTRY/poms}
 
 OC_CONTEXT_PROD=${OC_CONTEXT_PROD:=pomsp}
 OC_CONTEXT_TEST=${OC_CONTEXT_TEST:=pomst}
@@ -55,8 +54,8 @@ echo "Defining setup_oc_helm function"
 setup_oc_helm() {
  DIR=$1
 
- echo "Logging in $HARBOR_USER to registry : $HELM_REGISTRY"
- echo  $HARBOR_PASSWORD | helm registry login $HELM_REGISTRY --username $HARBOR_USER --password-stdin
+ echo "Logging in $HARBOR_USER to registry : $REGISTRY"
+ echo  $HARBOR_PASSWORD | helm registry login $REGISTRY --username $HARBOR_USER --password-stdin
 
  echo "Pulling chart '$HELM_REPO' '$CHART_PROJECT_NAME' '$CHART_VERSION'"
  helm pull $HELM_REPO/$CHART_PROJECT_NAME \
