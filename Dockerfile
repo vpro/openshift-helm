@@ -3,6 +3,7 @@ FROM ubuntu:26.04
 LABEL org.opencontainers.image.description="ubuntu with kubernetes, docker, oc, helm, used in ci/cd tasks"
 LABEL maintainer="digitaal-techniek@vpro.nl,michiel@mmprogrami.nl"
 
+ENV HELM_VERSION=4.2.4-1
 
 RUN apt-get update &&\
   apt-get -y upgrade &&\
@@ -29,7 +30,7 @@ RUN cd /tmp && \
 RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null &&\
      echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main"  | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list &&\
      apt-get update &&\
-     apt-get -y install helm=4.2.3-1 &&\
+     apt-get -y install helm=$HELM_VERSION &&\
      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
