@@ -5,6 +5,8 @@ LABEL maintainer="digitaal-techniek@vpro.nl,michiel@mmprogrami.nl"
 
 ENV HELM_VERSION=4.2.4-1
 
+ENV TZ=Europe/Amsterdam
+
 RUN apt-get update &&\
   apt-get -y upgrade &&\
   export DEBIAN_FRONTEND=noninteractive &&\
