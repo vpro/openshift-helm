@@ -1,16 +1,18 @@
 FROM ubuntu:26.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 LABEL org.opencontainers.image.description="ubuntu with kubernetes, docker, oc, helm, used in ci/cd tasks"
 LABEL maintainer="digitaal-techniek@vpro.nl,michiel@mmprogrami.nl"
 
 ENV HELM_VERSION=4.2.4-1
-
 ENV TZ=Europe/Amsterdam
 
 RUN apt-get update &&\
   apt-get -y upgrade &&\
-  export DEBIAN_FRONTEND=noninteractive &&\
-  apt-get -y install curl gnupg libxml2-utils make docker.io ca-certificates sudo gpg  apt-transport-https && \
+  apt-get -y install tzdata curl gnupg libxml2-utils make docker.io ca-certificates sudo gpg apt-transport-https && \
+  ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && \
+  echo "$TZ" > /etc/timezone && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
